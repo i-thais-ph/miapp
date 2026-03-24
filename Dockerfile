@@ -4,5 +4,5 @@ WORKDIR /miapp
 
 COPY . .
 
-CMD ["python", "miapp.python"]
+CMD ["python", "miapp.py"]
 

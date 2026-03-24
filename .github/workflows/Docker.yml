@@ -1,4 +1,4 @@
-name: Docker Build
+name: Docker workflow
 
 on:
   push:
@@ -9,8 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código
+      # 1. Descargar el código
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Construir imagen Docker
+      # 2. Configurar Docker Buildx (importante para checks)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          version: latest
+
+      # 3. Ejecutar comprobaciones de compilación (Build Checks)
+      - name: Run Docker Build Checks
+        run: docker buildx bake --check
+
+      # 4. Construir la imagen
+      - name: Build Docker image
         run: docker build -t miapp .
