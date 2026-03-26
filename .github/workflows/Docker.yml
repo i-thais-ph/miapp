@@ -13,16 +13,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configurar Docker Buildx (importante para checks)
+      # 2. Configurar Python para las pruebas y métricas
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # 3. Instalar herramientas de prueba (pytest y coverage)
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov
+
+      # 4. Ejecutar pruebas unitarias y calcular métrica de cobertura
+      # Aquí usamos 'miapp' porque es el nombre de tu archivo miapp.py
+      - name: Run Unit Tests and Generate Coverage Metric
+        run: pytest --cov=miapp --cov-report=term-missing
+
+      # 5. Configurar Docker Buildx (importante para checks)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           version: latest
 
-      # 3. Ejecutar comprobaciones de compilación (Build Checks)
+      # 6. Ejecutar comprobaciones de compilación con Bake
       - name: Run Docker Build Checks
         run: docker buildx bake --check
 
-      # 4. Construir la imagen
+      # 7. Construir la imagen final
       - name: Build Docker image
         run: docker build -t miapp .
