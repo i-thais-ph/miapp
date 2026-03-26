@@ -1,4 +1,4 @@
-name: Docker workflow
+name: Docker workflow 
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
           pip install pytest pytest-cov
 
       # 4. Ejecutar pruebas unitarias y calcular métrica de cobertura
-      # Aquí usamos 'miapp' porque es el nombre de tu archivo miapp.py
+      # Aquí usamos 'miapp' porque es el nombre de el archivo miapp.py
       - name: Run Unit Tests and Generate Coverage Metric
         run: pytest --cov=miapp --cov-report=term-missing
 
