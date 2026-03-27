@@ -6,4 +6,4 @@ if __name__ == "__main__":  # pragma: no cover
     resultado = sumar(10, 20)
     print(f"El resultado es: {resultado}")
 
-print("Hola desde visual")
+print("Prueba para explicar")
